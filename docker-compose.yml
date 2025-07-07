@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  # Serviço do banco de dados PostgreSQL
+  postgres:
+    image: postgres:14
+    container_name: ponto_ilumeo_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ponto_ilumeo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Serviço do backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ponto_ilumeo_backend
+    environment:
+      - PORT=3001
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE=ponto_ilumeo
+      - NODE_ENV=development
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Serviço do frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ponto_ilumeo_frontend
+    environment:
+      - REACT_APP_API_URL=http://localhost:3001/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+# Volumes
+volumes:
+  postgres_data:
+    driver: local
+
+# Redes
+networks:
+  app-network:
+    driver: bridge 
