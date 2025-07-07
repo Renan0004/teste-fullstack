@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
@@ -67,11 +67,15 @@ const NoRecords = styled.p`
 export const Dashboard: React.FC = () => {
   const [userCode, setUserCode] = useState<string>('');
   const [currentRecord, setCurrentRecord] = useState<TimeRecord | null>(null);
-  const [workedHours, setWorkedHours] = useState<WorkedHours>({ hours: 0, minutes: 0 });
+  const [workedHours, setWorkedHours] = useState<WorkedHours>({ hours: 0, minutes: 0, seconds: 0 });
   const [previousRecords, setPreviousRecords] = useState<TimeRecordWithHours[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
+  const [timerSeconds, setTimerSeconds] = useState<number>(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
 
+  // Efeito para inicializar os dados
   useEffect(() => {
     const storedUserCode = localStorage.getItem('@PontoIlumeo:userCode');
     
@@ -84,6 +88,53 @@ export const Dashboard: React.FC = () => {
     loadData(storedUserCode);
   }, [navigate]);
 
+  // Efeito para gerenciar o cronômetro
+  useEffect(() => {
+    // Inicia o cronômetro se houver um registro atual sem hora de saída
+    if (currentRecord && !currentRecord.exit_time) {
+      startTimer();
+    } else {
+      stopTimer();
+    }
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [currentRecord]);
+
+  // Efeito para atualizar o tempo trabalhado quando o cronômetro está rodando
+  useEffect(() => {
+    if (isTimerRunning) {
+      const entryTime = currentRecord ? new Date(currentRecord.entry_time).getTime() : Date.now();
+      const elapsedSeconds = Math.floor((Date.now() - entryTime) / 1000);
+      
+      const hours = Math.floor(elapsedSeconds / 3600);
+      const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+      const seconds = elapsedSeconds % 60;
+      
+      setWorkedHours({ hours, minutes, seconds });
+    }
+  }, [timerSeconds, isTimerRunning, currentRecord]);
+
+  const startTimer = () => {
+    if (!isTimerRunning) {
+      setIsTimerRunning(true);
+      timerRef.current = setInterval(() => {
+        setTimerSeconds(prev => prev + 1);
+      }, 1000);
+    }
+  };
+
+  const stopTimer = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    setIsTimerRunning(false);
+  };
+
   const loadData = async (code: string) => {
     setLoading(true);
     
@@ -92,7 +143,20 @@ export const Dashboard: React.FC = () => {
       const currentData = await timeRecordService.getCurrentTimeRecord(code);
       if (currentData) {
         setCurrentRecord(currentData.timeRecord);
-        setWorkedHours(currentData.workedHours);
+        
+        // Se não tiver hora de saída, inicia o cronômetro
+        if (!currentData.timeRecord.exit_time) {
+          const entryTime = new Date(currentData.timeRecord.entry_time).getTime();
+          const elapsedSeconds = Math.floor((Date.now() - entryTime) / 1000);
+          
+          const hours = Math.floor(elapsedSeconds / 3600);
+          const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+          const seconds = elapsedSeconds % 60;
+          
+          setWorkedHours({ hours, minutes, seconds });
+        } else {
+          setWorkedHours(currentData.workedHours);
+        }
       }
       
       // Carrega os registros anteriores
@@ -107,7 +171,11 @@ export const Dashboard: React.FC = () => {
 
   const handleRegisterEntry = async () => {
     try {
-      await timeRecordService.registerEntry(userCode);
+      const response = await timeRecordService.registerEntry(userCode);
+      if (response) {
+        setCurrentRecord(response);
+        startTimer();
+      }
       loadData(userCode);
     } catch (error) {
       console.error('Erro ao registrar entrada:', error);
@@ -116,15 +184,20 @@ export const Dashboard: React.FC = () => {
 
   const handleRegisterExit = async () => {
     try {
-      await timeRecordService.registerExit(userCode);
+      const response = await timeRecordService.registerExit(userCode);
+      if (response) {
+        setCurrentRecord(response.timeRecord);
+        setWorkedHours(response.workedHours);
+        stopTimer();
+      }
       loadData(userCode);
     } catch (error) {
       console.error('Erro ao registrar saída:', error);
     }
   };
 
-  const formatTime = (hours: number, minutes: number) => {
-    return `${hours}h ${minutes}m`;
+  const formatTime = (hours: number, minutes: number, seconds: number) => {
+    return `${hours}h ${minutes}m ${seconds}s`;
   };
 
   if (loading) {
@@ -138,7 +211,7 @@ export const Dashboard: React.FC = () => {
         <TimeSection>
           <TimeTitle>Relógio de ponto</TimeTitle>
           <TimeDisplay>
-            {formatTime(workedHours.hours, workedHours.minutes)}
+            {formatTime(workedHours.hours, workedHours.minutes, workedHours.seconds)}
           </TimeDisplay>
           <SubTitle>Horas de hoje</SubTitle>
           

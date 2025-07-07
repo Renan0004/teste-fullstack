@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { TimeRecord, TimeRecordWithHours } from '../types';
+import { TimeRecord, TimeRecordWithHours, WorkedHours } from '../types';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3001/api'
@@ -7,7 +7,7 @@ const api = axios.create({
 
 export const timeRecordService = {
   // Obter registro atual do usuário
-  getCurrentTimeRecord: async (userCode: string): Promise<{ timeRecord: TimeRecord; workedHours: { hours: number; minutes: number } } | null> => {
+  getCurrentTimeRecord: async (userCode: string): Promise<{ timeRecord: TimeRecord; workedHours: WorkedHours } | null> => {
     try {
       const response = await api.get(`/time-records/users/${userCode}/current`);
       return response.data;
@@ -40,7 +40,7 @@ export const timeRecordService = {
   },
 
   // Registrar saída
-  registerExit: async (userCode: string): Promise<{ timeRecord: TimeRecord; workedHours: { hours: number; minutes: number } } | null> => {
+  registerExit: async (userCode: string): Promise<{ timeRecord: TimeRecord; workedHours: WorkedHours } | null> => {
     try {
       const response = await api.post('/time-records/exit', { userCode });
       return response.data;

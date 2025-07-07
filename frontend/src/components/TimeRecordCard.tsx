@@ -47,8 +47,8 @@ export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) =>
   };
 
   // Formata as horas trabalhadas
-  const formatHours = (hours: number, minutes: number): string => {
-    return `${hours}h ${minutes}m`;
+  const formatHours = (hours: number, minutes: number, seconds: number): string => {
+    return `${hours}h ${minutes}m ${seconds}s`;
   };
 
   return (
@@ -57,7 +57,11 @@ export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) =>
         <DateText>{formatDate(timeRecord.entry_time)}</DateText>
       </DateInfo>
       <HoursInfo>
-        {formatHours(timeRecord.workedHours.hours, timeRecord.workedHours.minutes)}
+        {formatHours(
+          timeRecord.workedHours.hours, 
+          timeRecord.workedHours.minutes,
+          timeRecord.workedHours.seconds
+        )}
       </HoursInfo>
     </CardContainer>
   );

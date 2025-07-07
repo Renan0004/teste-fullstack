@@ -12,7 +12,17 @@ dotenv.config();
 const app = express();
 
 // Configurações do middleware
-app.use(cors());
+// Configuração do CORS para permitir requisições do frontend
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://ponto-ilumeo.vercel.app', 'http://localhost:3000'] 
+    : 'http://localhost:3000',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Rotas da API

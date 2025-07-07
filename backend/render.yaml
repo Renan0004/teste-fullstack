@@ -1,0 +1,36 @@
+services:
+  - type: web
+    name: ponto-ilumeo-api
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DB_HOST
+        fromDatabase:
+          name: ponto-ilumeo-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: ponto-ilumeo-db
+          property: port
+      - key: DB_USERNAME
+        fromDatabase:
+          name: ponto-ilumeo-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: ponto-ilumeo-db
+          property: password
+      - key: DB_DATABASE
+        fromDatabase:
+          name: ponto-ilumeo-db
+          property: database
+
+databases:
+  - name: ponto-ilumeo-db
+    plan: free
+    ipAllowList: [] 

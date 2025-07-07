@@ -67,14 +67,15 @@ export class TimeRecordService {
   /**
    * Calcula o total de horas trabalhadas em um registro
    */
-  calculateWorkedHours(timeRecord: TimeRecord): { hours: number; minutes: number } {
+  calculateWorkedHours(timeRecord: TimeRecord): { hours: number; minutes: number; seconds: number } {
     if (!timeRecord.total_minutes) {
-      return { hours: 0, minutes: 0 };
+      return { hours: 0, minutes: 0, seconds: timeRecord.total_seconds || 0 };
     }
     
     const hours = Math.floor(timeRecord.total_minutes / 60);
     const minutes = timeRecord.total_minutes % 60;
+    const seconds = timeRecord.total_seconds || 0;
     
-    return { hours, minutes };
+    return { hours, minutes, seconds };
   }
 } 

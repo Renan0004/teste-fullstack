@@ -15,6 +15,9 @@ export class TimeRecord {
   @Column({ type: 'int', nullable: true })
   total_minutes: number;
 
+  @Column({ type: 'int', nullable: true })
+  total_seconds: number;
+
   @CreateDateColumn()
   created_at: Date;
 

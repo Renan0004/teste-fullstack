@@ -54,11 +54,21 @@ export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).exte
     const exitTime = new Date();
     const entryTime = new Date(timeRecord.entry_time);
     
+    // Calcula a diferença em milissegundos
+    const diffMs = exitTime.getTime() - entryTime.getTime();
+    
+    // Calcula a diferença em segundos (total)
+    const totalSeconds = Math.floor(diffMs / 1000);
+    
     // Calcula a diferença em minutos
-    const diffMinutes = Math.floor((exitTime.getTime() - entryTime.getTime()) / (1000 * 60));
+    const diffMinutes = Math.floor(totalSeconds / 60);
+    
+    // Armazena os segundos restantes (após remover os minutos completos)
+    const remainingSeconds = totalSeconds % 60;
     
     timeRecord.exit_time = exitTime;
     timeRecord.total_minutes = diffMinutes;
+    timeRecord.total_seconds = remainingSeconds;
     
     return this.save(timeRecord);
   }

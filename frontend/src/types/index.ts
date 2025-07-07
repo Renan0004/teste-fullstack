@@ -10,6 +10,7 @@ export interface TimeRecord {
 export interface WorkedHours {
   hours: number;
   minutes: number;
+  seconds: number;
 }
 
 export interface TimeRecordWithHours extends TimeRecord {
