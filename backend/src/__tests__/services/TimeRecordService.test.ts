@@ -35,12 +35,17 @@ describe('TimeRecordService', () => {
     entry_time: new Date(),
     user_id: '1',
     created_at: new Date(),
+    exit_time: null,
+    total_minutes: null,
+    total_seconds: null,
+    user: null
   };
 
   const mockTimeRecordWithExit: TimeRecord = {
     ...mockTimeRecord,
     exit_time: new Date(),
     total_minutes: 60,
+    total_seconds: 0
   };
 
   beforeEach(() => {
@@ -158,18 +163,18 @@ describe('TimeRecordService', () => {
   describe('calculateWorkedHours', () => {
     it('deve retornar zeros quando não houver total_minutes', () => {
       const result = timeRecordService.calculateWorkedHours(mockTimeRecord);
-      expect(result).toEqual({ hours: 0, minutes: 0 });
+      expect(result).toEqual({ hours: 0, minutes: 0, seconds: 0 });
     });
 
     it('deve calcular corretamente as horas e minutos', () => {
       const result = timeRecordService.calculateWorkedHours(mockTimeRecordWithExit);
-      expect(result).toEqual({ hours: 1, minutes: 0 });
+      expect(result).toEqual({ hours: 1, minutes: 0, seconds: 0 });
     });
 
     it('deve calcular corretamente horas e minutos para valores maiores', () => {
-      const record = { ...mockTimeRecordWithExit, total_minutes: 185 }; // 3h 5min
+      const record = { ...mockTimeRecordWithExit, total_minutes: 185, total_seconds: 30 }; // 3h 5min 30s
       const result = timeRecordService.calculateWorkedHours(record);
-      expect(result).toEqual({ hours: 3, minutes: 5 });
+      expect(result).toEqual({ hours: 3, minutes: 5, seconds: 30 });
     });
   });
 }); 

@@ -4,16 +4,16 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/node"
+      "use": "@vercel/react"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/index.html"
     }
   ],
   "env": {
-    "REACT_APP_API_URL": "https://ponto-ilumeo-api.onrender.com/api"
+    "REACT_APP_API_URL": "https://ponto-ilumeo-api.vercel.app/api"
   }
 } 

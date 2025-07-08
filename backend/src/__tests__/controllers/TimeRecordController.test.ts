@@ -17,15 +17,20 @@ describe('TimeRecordController', () => {
     entry_time: new Date(),
     user_id: '1',
     created_at: new Date(),
+    exit_time: null,
+    total_minutes: null,
+    total_seconds: null,
+    user: null
   };
 
   const mockTimeRecordWithExit: TimeRecord = {
     ...mockTimeRecord,
     exit_time: new Date(),
     total_minutes: 60,
+    total_seconds: 0
   };
 
-  const mockWorkedHours = { hours: 1, minutes: 0 };
+  const mockWorkedHours = { hours: 1, minutes: 0, seconds: 0 };
 
   beforeEach(() => {
     // Reset mocks
