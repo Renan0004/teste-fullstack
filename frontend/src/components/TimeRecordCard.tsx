@@ -8,16 +8,23 @@ interface TimeRecordCardProps {
 
 const CardContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  background-color: #2C394B;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #1A2430;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    padding: 12px;
+    padding: 16px;
   }
+`;
+
+const CardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 `;
 
 const DateInfo = styled.div`
@@ -26,18 +33,50 @@ const DateInfo = styled.div`
 `;
 
 const DateText = styled.span`
-  font-size: 14px;
+  font-size: 18px;
+  font-weight: 600;
   color: #FFFFFF;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 16px;
+  }
+`;
+
+const HoursInfo = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 16px;
+  }
+`;
+
+const TimeDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TimeInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const TimeLabel = styled.span`
+  font-size: 14px;
+  color: #A0A0A0;
+  margin-right: 8px;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     font-size: 12px;
   }
 `;
 
-const HoursInfo = styled.div`
+const TimeValue = styled.span`
   font-size: 16px;
-  font-weight: 700;
   color: #FFFFFF;
+  font-weight: 600;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     font-size: 14px;
@@ -58,6 +97,19 @@ export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) =>
     }
   };
 
+  // Formata o horário para exibição
+  const formatTime = (dateString: string): string => {
+    try {
+      const date = new Date(dateString);
+      const hours = date.getHours().toString().padStart(2, '0');
+      const minutes = date.getMinutes().toString().padStart(2, '0');
+      const seconds = date.getSeconds().toString().padStart(2, '0');
+      return `${hours}:${minutes}:${seconds}`;
+    } catch (error) {
+      return '';
+    }
+  };
+
   // Formata as horas trabalhadas
   const formatHours = (hours: number, minutes: number, seconds: number): string => {
     return `${hours}h ${minutes}m ${seconds}s`;
@@ -65,16 +117,28 @@ export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) =>
 
   return (
     <CardContainer>
-      <DateInfo>
+      <CardHeader>
         <DateText>{formatDate(timeRecord.entry_time)}</DateText>
-      </DateInfo>
-      <HoursInfo>
-        {formatHours(
-          timeRecord.workedHours.hours, 
-          timeRecord.workedHours.minutes,
-          timeRecord.workedHours.seconds
+        <HoursInfo>
+          {formatHours(
+            timeRecord.workedHours.hours, 
+            timeRecord.workedHours.minutes,
+            timeRecord.workedHours.seconds
+          )}
+        </HoursInfo>
+      </CardHeader>
+      <TimeDetails>
+        <TimeInfo>
+          <TimeLabel>Entrada:</TimeLabel>
+          <TimeValue>{formatTime(timeRecord.entry_time)}</TimeValue>
+        </TimeInfo>
+        {timeRecord.exit_time && (
+          <TimeInfo>
+            <TimeLabel>Saída:</TimeLabel>
+            <TimeValue>{formatTime(timeRecord.exit_time)}</TimeValue>
+          </TimeInfo>
         )}
-      </HoursInfo>
+      </TimeDetails>
     </CardContainer>
   );
 };

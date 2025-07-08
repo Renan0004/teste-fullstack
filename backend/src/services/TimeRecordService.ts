@@ -7,11 +7,8 @@ export class TimeRecordService {
    * Obtém o registro de ponto atual do usuário
    */
   async getCurrentTimeRecord(userCode: string): Promise<TimeRecord | null> {
-    const user = await UserRepository.findByCode(userCode);
-    
-    if (!user) {
-      return null;
-    }
+    // Cria o usuário automaticamente se ele não existir
+    const user = await UserRepository.createIfNotExists(userCode);
     
     return TimeRecordRepository.findCurrentDayRecord(user.id);
   }
@@ -20,11 +17,8 @@ export class TimeRecordService {
    * Obtém os registros de ponto anteriores do usuário
    */
   async getPreviousTimeRecords(userCode: string): Promise<TimeRecord[]> {
-    const user = await UserRepository.findByCode(userCode);
-    
-    if (!user) {
-      return [];
-    }
+    // Cria o usuário automaticamente se ele não existir
+    const user = await UserRepository.createIfNotExists(userCode);
     
     return TimeRecordRepository.findPreviousRecords(user.id);
   }
@@ -49,11 +43,8 @@ export class TimeRecordService {
    * Registra a saída do usuário
    */
   async registerExit(userCode: string): Promise<TimeRecord | null> {
-    const user = await UserRepository.findByCode(userCode);
-    
-    if (!user) {
-      return null;
-    }
+    // Cria o usuário automaticamente se ele não existir
+    const user = await UserRepository.createIfNotExists(userCode);
     
     const currentRecord = await TimeRecordRepository.findCurrentDayRecord(user.id);
     

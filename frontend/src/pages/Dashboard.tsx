@@ -11,24 +11,30 @@ const DashboardContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #1E2733;
 `;
 
 const DashboardContent = styled.div`
-  padding: 16px;
+  padding: 24px;
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    padding: 12px;
+    padding: 16px;
   }
 `;
 
 const TimeSection = styled.section`
   margin-bottom: 32px;
+  background-color: #2C394B;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     margin-bottom: 24px;
+    padding: 20px;
   }
 `;
 
@@ -36,23 +42,25 @@ const TimeTitle = styled.h2`
   font-size: 16px;
   color: #A0A0A0;
   margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 `;
 
 const TimeDisplay = styled.div`
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 700;
   color: #FFFFFF;
   margin-bottom: 16px;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    font-size: 28px;
+    font-size: 32px;
   }
 `;
 
 const SubTitle = styled.p`
   font-size: 14px;
   color: #A0A0A0;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 `;
 
 const HistorySection = styled.section`
@@ -66,7 +74,11 @@ const HistorySection = styled.section`
 const HistoryTitle = styled.h3`
   font-size: 18px;
   color: #FFFFFF;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  padding-left: 10px;
+  border-left: 3px solid #FF8000;
+  display: flex;
+  align-items: center;
 `;
 
 const HistoryList = styled.div`
@@ -78,6 +90,19 @@ const NoRecords = styled.p`
   color: #A0A0A0;
   text-align: center;
   margin-top: 16px;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #FFFFFF;
+  font-size: 18px;
+`;
+
+const ButtonContainer = styled.div`
+  margin-top: 24px;
 `;
 
 export const Dashboard: React.FC = () => {
@@ -158,20 +183,26 @@ export const Dashboard: React.FC = () => {
       // Carrega o registro atual
       const currentData = await timeRecordService.getCurrentTimeRecord(code);
       if (currentData) {
+        // Se timeRecord for null, apenas define como null e usa as horas zeradas
         setCurrentRecord(currentData.timeRecord);
         
-        // Se não tiver hora de saída, inicia o cronômetro
-        if (!currentData.timeRecord.exit_time) {
-          const entryTime = new Date(currentData.timeRecord.entry_time).getTime();
-          const elapsedSeconds = Math.floor((Date.now() - entryTime) / 1000);
-          
-          const hours = Math.floor(elapsedSeconds / 3600);
-          const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-          const seconds = elapsedSeconds % 60;
-          
-          setWorkedHours({ hours, minutes, seconds });
+        if (currentData.timeRecord) {
+          // Se não tiver hora de saída, inicia o cronômetro
+          if (!currentData.timeRecord.exit_time) {
+            const entryTime = new Date(currentData.timeRecord.entry_time).getTime();
+            const elapsedSeconds = Math.floor((Date.now() - entryTime) / 1000);
+            
+            const hours = Math.floor(elapsedSeconds / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+            
+            setWorkedHours({ hours, minutes, seconds });
+          } else {
+            setWorkedHours(currentData.workedHours);
+          }
         } else {
-          setWorkedHours(currentData.workedHours);
+          // Se não há registro, define horas zeradas
+          setWorkedHours({ hours: 0, minutes: 0, seconds: 0 });
         }
       }
       
@@ -217,7 +248,11 @@ export const Dashboard: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <LoadingContainer>
+        Carregando...
+      </LoadingContainer>
+    );
   }
 
   return (
@@ -231,15 +266,17 @@ export const Dashboard: React.FC = () => {
           </TimeDisplay>
           <SubTitle>Horas de hoje</SubTitle>
           
-          {!currentRecord || currentRecord.exit_time ? (
-            <Button onClick={handleRegisterEntry} fullWidth>
-              Hora de entrada
-            </Button>
-          ) : (
-            <Button onClick={handleRegisterExit} fullWidth>
-              Hora de saída
-            </Button>
-          )}
+          <ButtonContainer>
+            {!currentRecord || currentRecord.exit_time ? (
+              <Button onClick={handleRegisterEntry} fullWidth>
+                Hora de entrada
+              </Button>
+            ) : (
+              <Button onClick={handleRegisterExit} fullWidth>
+                Hora de saída
+              </Button>
+            )}
+          </ButtonContainer>
         </TimeSection>
         
         <HistorySection>

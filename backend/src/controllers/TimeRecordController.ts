@@ -22,7 +22,11 @@ export class TimeRecordController {
       const timeRecord = await this.timeRecordService.getCurrentTimeRecord(userCode);
 
       if (!timeRecord) {
-        return res.status(404).json({ error: 'Registro de ponto não encontrado' });
+        // Se não há registro, retorna um objeto vazio com horas zeradas
+        return res.status(200).json({
+          timeRecord: null,
+          workedHours: { hours: 0, minutes: 0, seconds: 0 }
+        });
       }
 
       const workedHours = this.timeRecordService.calculateWorkedHours(timeRecord);
@@ -50,6 +54,7 @@ export class TimeRecordController {
 
       const timeRecords = await this.timeRecordService.getPreviousTimeRecords(userCode);
 
+      // Mesmo que não tenha registros, retorna um array vazio (não é erro)
       const recordsWithHours = timeRecords.map(record => ({
         ...record,
         workedHours: this.timeRecordService.calculateWorkedHours(record)

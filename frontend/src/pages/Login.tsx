@@ -9,6 +9,7 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: #1E2733;
 `;
 
 const LoginContent = styled.div`
@@ -17,25 +18,42 @@ const LoginContent = styled.div`
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 16px;
+  padding: 24px;
   max-width: 400px;
   margin: 0 auto;
   width: 100%;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    padding: 12px;
+    padding: 16px;
     max-width: 100%;
   }
 `;
 
+const LoginCard = styled.div`
+  background-color: #2C394B;
+  border-radius: 8px;
+  padding: 32px;
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 24px;
+  }
+`;
+
 const Title = styled.h1`
-  font-size: 24px;
+  font-size: 28px;
   color: #FFFFFF;
   margin-bottom: 32px;
   text-align: center;
+  font-weight: 600;
+
+  span {
+    color: #FF8000;
+  }
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
-    font-size: 20px;
+    font-size: 24px;
     margin-bottom: 24px;
   }
 `;
@@ -50,31 +68,19 @@ const ErrorMessage = styled.p`
   color: #F44336;
   margin-top: 16px;
   text-align: center;
+  font-size: 14px;
 `;
 
-const SubmitButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  font-size: 16px;
-  transition: all 0.2s ease-in-out;
-  width: 100%;
-  background-color: #FF8000;
-  color: #FFFFFF;
-  border: none;
-  cursor: pointer;
-  
-  &:hover {
-    background-color: #E67300;
-  }
-  
-  &:disabled {
-    background-color: #A0A0A0;
-    cursor: not-allowed;
-  }
+const InfoMessage = styled.p`
+  color: #A0A0A0;
+  margin-top: 16px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.5;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: 24px;
 `;
 
 export const Login: React.FC = () => {
@@ -101,20 +107,31 @@ export const Login: React.FC = () => {
     <LoginContainer>
       <Header />
       <LoginContent>
-        <Title>Ponto ilumeo</Title>
-        <Form onSubmit={handleSubmit}>
-          <Input
-            label="Código do usuário"
-            value={userCode}
-            onChange={(e) => setUserCode(e.target.value)}
-            placeholder="Digite seu código"
-            fullWidth
-          />
-          <SubmitButton type="submit">
-            Confirmar
-          </SubmitButton>
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-        </Form>
+        <LoginCard>
+          <Title>
+            Ponto <span>ilumeo</span>
+          </Title>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              label="Código do usuário"
+              value={userCode}
+              onChange={(e) => setUserCode(e.target.value)}
+              placeholder="Digite seu código"
+              fullWidth
+            />
+            <InfoMessage>
+              Digite qualquer código para acessar o sistema.
+              <br />
+              Não é necessário cadastro prévio.
+            </InfoMessage>
+            <ButtonWrapper>
+              <Button type="submit" fullWidth>
+                Confirmar
+              </Button>
+            </ButtonWrapper>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
+          </Form>
+        </LoginCard>
       </LoginContent>
     </LoginContainer>
   );
