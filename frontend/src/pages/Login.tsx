@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Header from '../components/Header';
 import Input from '../components/Input';
 import Button from '../components/Button';
@@ -98,6 +99,9 @@ export const Login: React.FC = () => {
     
     // Armazena o código do usuário no localStorage
     localStorage.setItem('@PontoIlumeo:userCode', userCode);
+    
+    // Mostra notificação de boas-vindas
+    toast.success(`Bem-vindo(a)! Código ${userCode} registrado com sucesso.`);
     
     // Redireciona para a página de dashboard
     navigate('/dashboard');

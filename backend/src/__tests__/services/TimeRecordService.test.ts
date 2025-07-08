@@ -54,41 +54,45 @@ describe('TimeRecordService', () => {
   });
 
   describe('getCurrentTimeRecord', () => {
-    it('deve retornar null quando o usuário não for encontrado', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(null);
-
-      const result = await timeRecordService.getCurrentTimeRecord('ABC123');
-      expect(result).toBeNull();
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
-    });
-
-    it('deve retornar o registro atual quando o usuário for encontrado', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(mockUser);
+    it('deve criar o usuário se não existir e retornar o registro atual', async () => {
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
       (TimeRecordRepository.findCurrentDayRecord as jest.Mock).mockResolvedValue(mockTimeRecord);
 
       const result = await timeRecordService.getCurrentTimeRecord('ABC123');
       expect(result).toEqual(mockTimeRecord);
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
+      expect(TimeRecordRepository.findCurrentDayRecord).toHaveBeenCalledWith(mockUser.id);
+    });
+
+    it('deve retornar null quando não houver registro atual', async () => {
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
+      (TimeRecordRepository.findCurrentDayRecord as jest.Mock).mockResolvedValue(null);
+
+      const result = await timeRecordService.getCurrentTimeRecord('ABC123');
+      expect(result).toBeNull();
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
       expect(TimeRecordRepository.findCurrentDayRecord).toHaveBeenCalledWith(mockUser.id);
     });
   });
 
   describe('getPreviousTimeRecords', () => {
-    it('deve retornar array vazio quando o usuário não for encontrado', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(null);
-
-      const result = await timeRecordService.getPreviousTimeRecords('ABC123');
-      expect(result).toEqual([]);
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
-    });
-
-    it('deve retornar os registros anteriores quando o usuário for encontrado', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(mockUser);
+    it('deve criar o usuário se não existir e retornar os registros anteriores', async () => {
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
       (TimeRecordRepository.findPreviousRecords as jest.Mock).mockResolvedValue([mockTimeRecordWithExit]);
 
       const result = await timeRecordService.getPreviousTimeRecords('ABC123');
       expect(result).toEqual([mockTimeRecordWithExit]);
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
+      expect(TimeRecordRepository.findPreviousRecords).toHaveBeenCalledWith(mockUser.id);
+    });
+
+    it('deve retornar array vazio quando não houver registros anteriores', async () => {
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
+      (TimeRecordRepository.findPreviousRecords as jest.Mock).mockResolvedValue([]);
+
+      const result = await timeRecordService.getPreviousTimeRecords('ABC123');
+      expect(result).toEqual([]);
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
       expect(TimeRecordRepository.findPreviousRecords).toHaveBeenCalledWith(mockUser.id);
     });
   });
@@ -119,42 +123,44 @@ describe('TimeRecordService', () => {
   });
 
   describe('registerExit', () => {
-    it('deve retornar null quando o usuário não for encontrado', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(null);
-
-      const result = await timeRecordService.registerExit('ABC123');
-      expect(result).toBeNull();
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
-    });
-
-    it('deve retornar null quando não existir um registro aberto', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(mockUser);
+    it('deve criar o usuário se não existir e verificar registros', async () => {
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
       (TimeRecordRepository.findCurrentDayRecord as jest.Mock).mockResolvedValue(null);
 
       const result = await timeRecordService.registerExit('ABC123');
       expect(result).toBeNull();
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
+      expect(TimeRecordRepository.findCurrentDayRecord).toHaveBeenCalledWith(mockUser.id);
+    });
+
+    it('deve retornar null quando não existir um registro aberto', async () => {
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
+      (TimeRecordRepository.findCurrentDayRecord as jest.Mock).mockResolvedValue(null);
+
+      const result = await timeRecordService.registerExit('ABC123');
+      expect(result).toBeNull();
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
       expect(TimeRecordRepository.findCurrentDayRecord).toHaveBeenCalledWith(mockUser.id);
     });
 
     it('deve retornar null quando o registro já estiver fechado', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(mockUser);
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
       (TimeRecordRepository.findCurrentDayRecord as jest.Mock).mockResolvedValue(mockTimeRecordWithExit);
 
       const result = await timeRecordService.registerExit('ABC123');
       expect(result).toBeNull();
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
       expect(TimeRecordRepository.findCurrentDayRecord).toHaveBeenCalledWith(mockUser.id);
     });
 
     it('deve registrar a saída quando existir um registro aberto', async () => {
-      (UserRepository.findByCode as jest.Mock).mockResolvedValue(mockUser);
+      (UserRepository.createIfNotExists as jest.Mock).mockResolvedValue(mockUser);
       (TimeRecordRepository.findCurrentDayRecord as jest.Mock).mockResolvedValue(mockTimeRecord);
       (TimeRecordRepository.registerExit as jest.Mock).mockResolvedValue(mockTimeRecordWithExit);
 
       const result = await timeRecordService.registerExit('ABC123');
       expect(result).toEqual(mockTimeRecordWithExit);
-      expect(UserRepository.findByCode).toHaveBeenCalledWith('ABC123');
+      expect(UserRepository.createIfNotExists).toHaveBeenCalledWith('ABC123');
       expect(TimeRecordRepository.findCurrentDayRecord).toHaveBeenCalledWith(mockUser.id);
       expect(TimeRecordRepository.registerExit).toHaveBeenCalledWith(mockTimeRecord.id);
     });

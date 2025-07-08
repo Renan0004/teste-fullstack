@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TimeRecordCard from '../components/TimeRecordCard';
@@ -222,10 +223,12 @@ export const Dashboard: React.FC = () => {
       if (response) {
         setCurrentRecord(response);
         startTimer();
+        toast.success('Entrada registrada com sucesso!');
       }
       loadData(userCode);
     } catch (error) {
       console.error('Erro ao registrar entrada:', error);
+      toast.error('Erro ao registrar entrada. Tente novamente.');
     }
   };
 
@@ -236,10 +239,12 @@ export const Dashboard: React.FC = () => {
         setCurrentRecord(response.timeRecord);
         setWorkedHours(response.workedHours);
         stopTimer();
+        toast.success('Saída registrada com sucesso!');
       }
       loadData(userCode);
     } catch (error) {
       console.error('Erro ao registrar saída:', error);
+      toast.error('Erro ao registrar saída. Tente novamente.');
     }
   };
 
@@ -257,7 +262,7 @@ export const Dashboard: React.FC = () => {
 
   return (
     <DashboardContainer>
-      <Header userCode={userCode} />
+      <Header userCode={userCode} showLogout={true} />
       <DashboardContent>
         <TimeSection>
           <TimeTitle>Relógio de ponto</TimeTitle>

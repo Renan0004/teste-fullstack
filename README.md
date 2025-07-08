@@ -22,6 +22,7 @@ Este é um sistema de controle de ponto desenvolvido como parte de um teste téc
 - Styled Components
 - Axios
 - React Router
+- React Toastify para notificações
 - ESLint e Prettier para padronização de código
 
 ## Arquitetura do Projeto
@@ -50,6 +51,8 @@ O frontend segue uma arquitetura baseada em componentes:
 - **Registro de entrada e saída**: Permite registrar o início e fim da jornada de trabalho.
 - **Visualização do tempo trabalhado em tempo real**: Cronômetro que mostra o tempo trabalhado no dia atual.
 - **Histórico de registros anteriores**: Lista dos registros de ponto dos dias anteriores.
+- **Notificações**: Feedback visual para ações do usuário.
+- **Logout**: Possibilidade de sair do sistema.
 
 ## Estrutura do Projeto
 
@@ -88,7 +91,7 @@ teste-fullstack/
 - PostgreSQL
 - Docker e Docker Compose (opcional)
 
-### Usando Docker
+### Usando Docker (Recomendado)
 1. Clone o repositório:
 ```bash
 git clone https://github.com/seu-usuario/teste-fullstack.git
@@ -97,10 +100,26 @@ cd teste-fullstack
 
 2. Inicie os containers:
 ```bash
-docker-compose up
+docker-compose up -d
 ```
 
 3. Acesse a aplicação em `http://localhost:3000`
+
+4. Para parar os containers:
+```bash
+docker-compose down
+```
+
+5. Para visualizar logs:
+```bash
+# Todos os serviços
+docker-compose logs -f
+
+# Serviço específico
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f postgres
+```
 
 ### Sem Docker
 
@@ -159,14 +178,54 @@ npm start
 
 ### Backend
 ```bash
+# Entrar na pasta do backend
 cd backend
+
+# Instalar dependências (se ainda não tiver feito)
+npm install
+
+# Executar todos os testes
 npm test
+
+# Executar testes com cobertura
+npm run test:coverage
+
+# Executar testes em modo watch
+npm run test:watch
+
+# Executar testes específicos
+npm test -- -t "nome do teste"
 ```
 
 ### Frontend
 ```bash
+# Entrar na pasta do frontend
 cd frontend
+
+# Instalar dependências (se ainda não tiver feito)
+npm install
+
+# Executar todos os testes
 npm test
+
+# Executar testes com cobertura
+npm test -- --coverage
+
+# Executar testes em modo watch
+npm test -- --watch
+
+# Executar testes específicos
+npm test -- -t "nome do teste"
+```
+
+## Executando Testes com Docker
+
+```bash
+# Testes do backend
+docker-compose exec backend npm test
+
+# Testes do frontend
+docker-compose exec frontend npm test
 ```
 
 ## Padrões de Código
@@ -200,6 +259,7 @@ npm run lint:fix  # Corrige problemas automaticamente
 - **React Router**: Gerenciamento de rotas da aplicação.
 - **Axios**: Cliente HTTP para comunicação com a API.
 - **Design responsivo**: Interface adaptável a diferentes tamanhos de tela.
+- **React Toastify**: Notificações para feedback ao usuário.
 
 ## Deploy
 

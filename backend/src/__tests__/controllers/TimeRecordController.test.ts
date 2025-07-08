@@ -72,9 +72,10 @@ describe('TimeRecordController', () => {
       expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Código do usuário é obrigatório' });
     });
     
-    it('deve retornar erro 404 quando não encontrar o registro', async () => {
+    it('deve retornar objeto vazio com horas zeradas quando não encontrar o registro', async () => {
       mockRequest.params = { userCode: 'ABC123' };
       mockTimeRecordService.getCurrentTimeRecord.mockResolvedValue(null);
+      mockTimeRecordService.calculateWorkedHours.mockReturnValue({ hours: 0, minutes: 0, seconds: 0 });
       
       await timeRecordController.getCurrentTimeRecord(
         mockRequest as Request,
@@ -82,8 +83,11 @@ describe('TimeRecordController', () => {
       );
       
       expect(mockTimeRecordService.getCurrentTimeRecord).toHaveBeenCalledWith('ABC123');
-      expect(mockResponse.status).toHaveBeenCalledWith(404);
-      expect(mockResponse.json).toHaveBeenCalledWith({ error: 'Registro de ponto não encontrado' });
+      expect(mockResponse.status).toHaveBeenCalledWith(200);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        timeRecord: null,
+        workedHours: { hours: 0, minutes: 0, seconds: 0 }
+      });
     });
     
     it('deve retornar o registro quando encontrado', async () => {

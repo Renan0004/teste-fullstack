@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import ConfirmationModal from './ConfirmationModal';
 
 interface HeaderProps {
   userCode?: string;
+  showLogout?: boolean;
 }
 
 const HeaderContainer = styled.header`
@@ -38,6 +42,17 @@ const Logo = styled.div`
   }
 `;
 
+const RightSection = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    justify-content: space-between;
+  }
+`;
+
 const UserInfo = styled.div`
   display: flex;
   align-items: center;
@@ -57,18 +72,64 @@ const UserInfo = styled.div`
   }
 `;
 
-export const Header: React.FC<HeaderProps> = ({ userCode }) => {
+const LogoutButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #FF8000;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba(255, 128, 0, 0.1);
+  }
+`;
+
+export const Header: React.FC<HeaderProps> = ({ userCode, showLogout = false }) => {
+  const navigate = useNavigate();
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+  const handleLogoutClick = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('@PontoIlumeo:userCode');
+    toast.info('Sessão encerrada com sucesso');
+    navigate('/');
+  };
+
   return (
     <HeaderContainer>
       <Logo>
         Ponto <span>ilumeo</span>
       </Logo>
       {userCode && (
-        <UserInfo>
-          <span>#</span>
-          <strong>{userCode}</strong>
-        </UserInfo>
+        <RightSection>
+          <UserInfo>
+            <span>#</span>
+            <strong>{userCode}</strong>
+          </UserInfo>
+          {showLogout && (
+            <LogoutButton onClick={handleLogoutClick}>
+              Sair
+            </LogoutButton>
+          )}
+        </RightSection>
       )}
+
+      <ConfirmationModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+        onConfirm={handleLogout}
+        title="Confirmar saída"
+        message="Tem certeza que deseja sair do sistema?"
+      />
     </HeaderContainer>
   );
 };
