@@ -1,4 +1,5 @@
 {
+  "name": "ponto-ilumeo-backend",
   "version": 2,
   "builds": [
     {

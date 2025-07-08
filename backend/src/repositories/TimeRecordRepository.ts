@@ -22,11 +22,11 @@ export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).exte
   },
   
   async findPreviousRecords(userId: string, limit: number = 10): Promise<TimeRecord[]> {
-    // Busca registros completos (com data de saída)
+    // Busca todos os registros, incluindo os que estão em andamento
+    // Modificamos para remover a condição de exit_time não ser nulo
     return this.find({
       where: {
         user_id: userId,
-        exit_time: Not(IsNull())
       },
       order: {
         entry_time: 'DESC'

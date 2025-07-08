@@ -264,20 +264,49 @@ npm run lint:fix  # Corrige problemas automaticamente
 ## Deploy
 
 ### Backend (Render)
+
 1. Crie uma conta no [Render](https://render.com)
-2. Conecte seu repositório GitHub
-3. Crie um novo Web Service com as seguintes configurações:
-   - Build Command: `cd backend && npm install && npm run build`
-   - Start Command: `cd backend && npm start`
-   - Environment Variables: Configure as variáveis de ambiente necessárias
+2. Conecte seu repositório GitHub ao Render
+3. No dashboard do Render, clique em "New" e selecione "Blueprint"
+4. Selecione seu repositório do GitHub
+5. O Render detectará automaticamente o arquivo `render.yaml` e configurará o serviço
+6. Revise as configurações e clique em "Apply"
+7. O Render criará o banco de dados PostgreSQL e o serviço web automaticamente
+8. Aguarde o deploy ser concluído
+9. Anote a URL do seu backend (ex: `https://ponto-ilumeo-api.onrender.com`)
 
 ### Frontend (Vercel)
+
 1. Crie uma conta na [Vercel](https://vercel.com)
-2. Conecte seu repositório GitHub
-3. Importe o projeto com as seguintes configurações:
+2. Conecte seu repositório GitHub à Vercel
+3. No dashboard da Vercel, clique em "Import Project"
+4. Selecione "Import Git Repository" e escolha seu repositório
+5. Configure o projeto:
    - Framework Preset: Create React App
    - Root Directory: `frontend`
-   - Environment Variables: Configure `REACT_APP_API_URL` para apontar para o backend em produção
+   - Build Command: `npm run build`
+   - Output Directory: `build`
+   - Environment Variables: Configure `REACT_APP_API_URL` para apontar para o backend no Render (ex: `https://ponto-ilumeo-api.onrender.com/api`)
+6. Clique em "Deploy"
+7. Aguarde o deploy ser concluído
+8. Seu frontend estará disponível em uma URL como `https://ponto-ilumeo.vercel.app`
+
+### Atualizando a URL da API
+
+Depois que o backend estiver implantado no Render, você precisará atualizar a URL da API no frontend:
+
+1. Na Vercel, vá para o seu projeto
+2. Clique em "Settings" > "Environment Variables"
+3. Atualize a variável `REACT_APP_API_URL` com a URL correta do seu backend (ex: `https://ponto-ilumeo-api.onrender.com/api`)
+4. Clique em "Save"
+5. Redeploy o projeto para aplicar as alterações
+
+### Verificando o Deploy
+
+1. Acesse a URL do frontend fornecida pela Vercel
+2. Tente fazer login com qualquer código de usuário
+3. Verifique se consegue registrar entrada e saída
+4. Verifique se os registros anteriores estão sendo exibidos corretamente
 
 ## Autor
 

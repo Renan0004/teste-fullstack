@@ -17,6 +17,7 @@ export const AppDataSource = new DataSource({
   entities: [path.join(__dirname, '..', 'models', '*.{ts,js}')],
   migrations: [path.join(__dirname, '..', 'migrations', '*.{ts,js}')],
   subscribers: [],
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
 // Função para inicializar o banco de dados com a extensão uuid-ossp
