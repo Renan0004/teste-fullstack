@@ -12,6 +12,11 @@ const HeaderContainer = styled.header`
   padding: 16px;
   background-color: #1E2733;
   border-bottom: 1px solid #2C394B;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    flex-direction: column;
+    gap: 10px;
+  }
 `;
 
 const Logo = styled.div`
@@ -21,6 +26,10 @@ const Logo = styled.div`
   
   span {
     color: #FF8000;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 20px;
   }
 `;
 

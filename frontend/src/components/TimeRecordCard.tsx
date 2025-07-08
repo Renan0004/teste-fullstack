@@ -14,6 +14,10 @@ const CardContainer = styled.div`
   background-color: #2C394B;
   border-radius: 4px;
   margin-bottom: 8px;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 12px;
+  }
 `;
 
 const DateInfo = styled.div`
@@ -24,12 +28,20 @@ const DateInfo = styled.div`
 const DateText = styled.span`
   font-size: 14px;
   color: #FFFFFF;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 12px;
+  }
 `;
 
 const HoursInfo = styled.div`
   font-size: 16px;
   font-weight: 700;
   color: #FFFFFF;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 14px;
+  }
 `;
 
 export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) => {

@@ -18,10 +18,18 @@ const DashboardContent = styled.div`
   max-width: 800px;
   margin: 0 auto;
   width: 100%;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 12px;
+  }
 `;
 
 const TimeSection = styled.section`
   margin-bottom: 32px;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-bottom: 24px;
+  }
 `;
 
 const TimeTitle = styled.h2`
@@ -35,6 +43,10 @@ const TimeDisplay = styled.div`
   font-weight: 700;
   color: #FFFFFF;
   margin-bottom: 16px;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 28px;
+  }
 `;
 
 const SubTitle = styled.p`
@@ -45,6 +57,10 @@ const SubTitle = styled.p`
 
 const HistorySection = styled.section`
   margin-top: 32px;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    margin-top: 24px;
+  }
 `;
 
 const HistoryTitle = styled.h3`

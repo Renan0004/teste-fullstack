@@ -21,6 +21,11 @@ const LoginContent = styled.div`
   max-width: 400px;
   margin: 0 auto;
   width: 100%;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    padding: 12px;
+    max-width: 100%;
+  }
 `;
 
 const Title = styled.h1`
@@ -28,6 +33,11 @@ const Title = styled.h1`
   color: #FFFFFF;
   margin-bottom: 32px;
   text-align: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    font-size: 20px;
+    margin-bottom: 24px;
+  }
 `;
 
 const Form = styled.form`

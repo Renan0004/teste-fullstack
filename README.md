@@ -15,19 +15,69 @@ Este é um sistema de controle de ponto desenvolvido como parte de um teste téc
 - TypeORM
 - PostgreSQL
 - Jest para testes
+- ESLint e Prettier para padronização de código
 
 ### Frontend
 - React com TypeScript
 - Styled Components
 - Axios
 - React Router
+- ESLint e Prettier para padronização de código
+
+## Arquitetura do Projeto
+
+### Backend
+O backend segue uma arquitetura em camadas, respeitando os princípios SOLID:
+
+1. **Controllers**: Responsáveis por receber as requisições HTTP e retornar respostas.
+2. **Services**: Contêm a lógica de negócio da aplicação.
+3. **Repositories**: Responsáveis pela comunicação com o banco de dados.
+4. **Models**: Definem as entidades do sistema.
+5. **Routes**: Definem as rotas da API.
+
+### Frontend
+O frontend segue uma arquitetura baseada em componentes:
+
+1. **Components**: Componentes reutilizáveis da interface.
+2. **Pages**: Páginas da aplicação.
+3. **Services**: Serviços para comunicação com a API.
+4. **Types**: Definição de tipos TypeScript.
+5. **Styles**: Estilos globais e tema da aplicação.
+
+## Funcionalidades
+
+- **Login com código de usuário**: Autenticação simples usando código de usuário.
+- **Registro de entrada e saída**: Permite registrar o início e fim da jornada de trabalho.
+- **Visualização do tempo trabalhado em tempo real**: Cronômetro que mostra o tempo trabalhado no dia atual.
+- **Histórico de registros anteriores**: Lista dos registros de ponto dos dias anteriores.
 
 ## Estrutura do Projeto
 
 ```
 teste-fullstack/
 ├── backend/           # API Node.js
+│   ├── src/
+│   │   ├── config/    # Configurações (banco de dados, etc.)
+│   │   ├── controllers/ # Controladores da API
+│   │   ├── middlewares/ # Middlewares Express
+│   │   ├── migrations/  # Migrações do banco de dados
+│   │   ├── models/    # Modelos/Entidades
+│   │   ├── repositories/ # Repositórios para acesso ao banco
+│   │   ├── routes/    # Rotas da API
+│   │   ├── services/  # Serviços com lógica de negócio
+│   │   └── server.ts  # Ponto de entrada da aplicação
+│   ├── __tests__/     # Testes automatizados
+│   └── ...
 ├── frontend/          # Aplicação React
+│   ├── public/        # Arquivos públicos
+│   ├── src/
+│   │   ├── assets/    # Recursos estáticos
+│   │   ├── components/ # Componentes React
+│   │   ├── pages/     # Páginas da aplicação
+│   │   ├── services/  # Serviços (API, etc.)
+│   │   ├── styles/    # Estilos globais
+│   │   └── types/     # Definições de tipos TypeScript
+│   └── ...
 └── docker-compose.yml # Configuração Docker
 ```
 
@@ -105,6 +155,52 @@ npm start
 
 5. Acesse a aplicação em `http://localhost:3000`
 
+## Testes
+
+### Backend
+```bash
+cd backend
+npm test
+```
+
+### Frontend
+```bash
+cd frontend
+npm test
+```
+
+## Padrões de Código
+
+Este projeto utiliza ESLint e Prettier para garantir a padronização do código. Para verificar e corrigir problemas de linting:
+
+### Backend
+```bash
+cd backend
+npm run lint      # Verifica problemas
+npm run lint:fix  # Corrige problemas automaticamente
+```
+
+### Frontend
+```bash
+cd frontend
+npm run lint      # Verifica problemas
+npm run lint:fix  # Corrige problemas automaticamente
+```
+
+## Decisões Técnicas
+
+### Backend
+- **TypeORM**: Escolhido pela facilidade de uso com TypeScript e suporte a migrações.
+- **Arquitetura em camadas**: Facilita a manutenção e testabilidade do código.
+- **Repository Pattern**: Abstrai a lógica de acesso ao banco de dados.
+- **Injeção de dependências**: Facilita os testes unitários.
+
+### Frontend
+- **Styled Components**: Permite estilização baseada em componentes com suporte a temas.
+- **React Router**: Gerenciamento de rotas da aplicação.
+- **Axios**: Cliente HTTP para comunicação com a API.
+- **Design responsivo**: Interface adaptável a diferentes tamanhos de tela.
+
 ## Deploy
 
 ### Backend (Render)
@@ -122,27 +218,6 @@ npm start
    - Framework Preset: Create React App
    - Root Directory: `frontend`
    - Environment Variables: Configure `REACT_APP_API_URL` para apontar para o backend em produção
-
-## Funcionalidades
-
-- Login com código de usuário
-- Registro de entrada e saída
-- Visualização do tempo trabalhado em tempo real
-- Histórico de registros anteriores
-
-## Testes
-
-### Backend
-```bash
-cd backend
-npm test
-```
-
-### Frontend
-```bash
-cd frontend
-npm test
-```
 
 ## Autor
 
