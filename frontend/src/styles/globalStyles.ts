@@ -5,14 +5,13 @@ export const GlobalStyles = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
   }
 
   body {
-    background-color: #1E2733;
-    color: #FFFFFF;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+    transition: all 0.3s ease;
   }
 
   button {
@@ -26,21 +25,8 @@ export const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #1E2733;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #2C394B;
-    border-radius: 4px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #374B63;
+  input, button, textarea {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
   }
 `;
 

@@ -1,21 +1,24 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TimeRecordCard from '../components/TimeRecordCard';
+import ExportButton from '../components/ExportButton';
 import { timeRecordService } from '../services/api';
 import { TimeRecord, TimeRecordWithHours, WorkedHours } from '../types';
+import { Theme } from '../styles/themes';
 
-const DashboardContainer = styled.div`
+const DashboardContainer = styled.div<{ theme: Theme }>`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #1E2733;
+  background-color: ${({ theme }) => theme.colors.background};
+  transition: all 0.3s ease;
 `;
 
-const DashboardContent = styled.div`
+const DashboardContent = styled.div<{ theme: Theme }>`
   padding: 24px;
   max-width: 800px;
   margin: 0 auto;
@@ -26,12 +29,13 @@ const DashboardContent = styled.div`
   }
 `;
 
-const TimeSection = styled.section`
+const TimeSection = styled.section<{ theme: Theme }>`
   margin-bottom: 32px;
-  background-color: #2C394B;
+  background-color: ${({ theme }) => theme.colors.cardBackground};
   border-radius: 8px;
   padding: 24px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.medium};
+  transition: all 0.3s ease;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     margin-bottom: 24px;
@@ -39,18 +43,18 @@ const TimeSection = styled.section`
   }
 `;
 
-const TimeTitle = styled.h2`
+const TimeTitle = styled.h2<{ theme: Theme }>`
   font-size: 16px;
-  color: #A0A0A0;
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 8px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 `;
 
-const TimeDisplay = styled.div`
+const TimeDisplay = styled.div<{ theme: Theme }>`
   font-size: 36px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 16px;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
@@ -58,13 +62,13 @@ const TimeDisplay = styled.div`
   }
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled.p<{ theme: Theme }>`
   font-size: 14px;
-  color: #A0A0A0;
+  color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 20px;
 `;
 
-const HistorySection = styled.section`
+const HistorySection = styled.section<{ theme: Theme }>`
   margin-top: 32px;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
@@ -72,38 +76,45 @@ const HistorySection = styled.section`
   }
 `;
 
-const HistoryTitle = styled.h3`
+const HistoryTitle = styled.h3<{ theme: Theme }>`
   font-size: 18px;
-  color: #FFFFFF;
+  color: ${({ theme }) => theme.colors.text};
   margin-bottom: 20px;
   padding-left: 10px;
-  border-left: 3px solid #FF8000;
+  border-left: 3px solid ${({ theme }) => theme.colors.primary};
   display: flex;
   align-items: center;
 `;
 
-const HistoryList = styled.div`
+const HistoryList = styled.div<{ theme: Theme }>`
   display: flex;
   flex-direction: column;
 `;
 
-const NoRecords = styled.p`
-  color: #A0A0A0;
+const NoRecords = styled.p<{ theme: Theme }>`
+  color: ${({ theme }) => theme.colors.textSecondary};
   text-align: center;
   margin-top: 16px;
 `;
 
-const LoadingContainer = styled.div`
+const LoadingContainer = styled.div<{ theme: Theme }>`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  color: #FFFFFF;
+  color: ${({ theme }) => theme.colors.text};
   font-size: 18px;
 `;
 
-const ButtonContainer = styled.div`
+const ButtonContainer = styled.div<{ theme: Theme }>`
   margin-top: 24px;
+`;
+
+const HistoryHeader = styled.div<{ theme: Theme }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const Dashboard: React.FC = () => {
@@ -113,9 +124,48 @@ export const Dashboard: React.FC = () => {
   const [previousRecords, setPreviousRecords] = useState<TimeRecordWithHours[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [isTimerRunning, setIsTimerRunning] = useState<boolean>(false);
-  const [timerSeconds, setTimerSeconds] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [elapsedTime, setElapsedTime] = useState<number>(0); // Tempo decorrido em segundos
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
+
+  // Função para iniciar o cronômetro
+  const startTimer = useCallback(() => {
+    if (!isTimerRunning) {
+      // Limpar qualquer timer existente antes de criar um novo
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      
+      setIsTimerRunning(true);
+      
+      // Iniciar o cronômetro que atualiza a cada segundo
+      timerRef.current = setInterval(() => {
+        setElapsedTime(prev => {
+          const newTime = prev + 1;
+          
+          // Calcular horas, minutos e segundos
+          const hours = Math.floor(newTime / 3600);
+          const minutes = Math.floor((newTime % 3600) / 60);
+          const seconds = newTime % 60;
+          
+          // Atualizar o estado de workedHours
+          setWorkedHours({ hours, minutes, seconds });
+          
+          return newTime;
+        });
+      }, 1000);
+    }
+  }, [isTimerRunning]);
+
+  // Função para parar o cronômetro
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    setIsTimerRunning(false);
+  }, []);
 
   // Efeito para inicializar os dados
   useEffect(() => {
@@ -134,6 +184,15 @@ export const Dashboard: React.FC = () => {
   useEffect(() => {
     // Inicia o cronômetro se houver um registro atual sem hora de saída
     if (currentRecord && !currentRecord.exit_time) {
+      // Calcular o tempo decorrido desde a entrada
+      const entryTime = new Date(currentRecord.entry_time).getTime();
+      const now = Date.now();
+      const initialElapsedSeconds = Math.floor((now - entryTime) / 1000);
+      
+      // Definir o tempo decorrido
+      setElapsedTime(initialElapsedSeconds);
+      
+      // Iniciar o cronômetro
       startTimer();
     } else {
       stopTimer();
@@ -144,38 +203,7 @@ export const Dashboard: React.FC = () => {
         clearInterval(timerRef.current);
       }
     };
-  }, [currentRecord]);
-
-  // Efeito para atualizar o tempo trabalhado quando o cronômetro está rodando
-  useEffect(() => {
-    if (isTimerRunning) {
-      const entryTime = currentRecord ? new Date(currentRecord.entry_time).getTime() : Date.now();
-      const elapsedSeconds = Math.floor((Date.now() - entryTime) / 1000);
-      
-      const hours = Math.floor(elapsedSeconds / 3600);
-      const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-      const seconds = elapsedSeconds % 60;
-      
-      setWorkedHours({ hours, minutes, seconds });
-    }
-  }, [timerSeconds, isTimerRunning, currentRecord]);
-
-  const startTimer = () => {
-    if (!isTimerRunning) {
-      setIsTimerRunning(true);
-      timerRef.current = setInterval(() => {
-        setTimerSeconds(prev => prev + 1);
-      }, 1000);
-    }
-  };
-
-  const stopTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    setIsTimerRunning(false);
-  };
+  }, [currentRecord, startTimer, stopTimer]);
 
   const loadData = async (code: string) => {
     setLoading(true);
@@ -191,12 +219,18 @@ export const Dashboard: React.FC = () => {
           // Se não tiver hora de saída, inicia o cronômetro
           if (!currentData.timeRecord.exit_time) {
             const entryTime = new Date(currentData.timeRecord.entry_time).getTime();
-            const elapsedSeconds = Math.floor((Date.now() - entryTime) / 1000);
+            const now = Date.now();
+            const initialElapsedSeconds = Math.floor((now - entryTime) / 1000);
             
-            const hours = Math.floor(elapsedSeconds / 3600);
-            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-            const seconds = elapsedSeconds % 60;
+            // Definir o tempo decorrido
+            setElapsedTime(initialElapsedSeconds);
             
+            // Calcular horas, minutos e segundos
+            const hours = Math.floor(initialElapsedSeconds / 3600);
+            const minutes = Math.floor((initialElapsedSeconds % 3600) / 60);
+            const seconds = initialElapsedSeconds % 60;
+            
+            // Atualizar o estado de workedHours
             setWorkedHours({ hours, minutes, seconds });
           } else {
             setWorkedHours(currentData.workedHours);
@@ -204,6 +238,7 @@ export const Dashboard: React.FC = () => {
         } else {
           // Se não há registro, define horas zeradas
           setWorkedHours({ hours: 0, minutes: 0, seconds: 0 });
+          setElapsedTime(0);
         }
       }
       
@@ -222,7 +257,15 @@ export const Dashboard: React.FC = () => {
       const response = await timeRecordService.registerEntry(userCode);
       if (response) {
         setCurrentRecord(response);
-        startTimer();
+        
+        // Resetar o cronômetro
+        setElapsedTime(0);
+        setWorkedHours({ hours: 0, minutes: 0, seconds: 0 });
+        
+        // Iniciar o cronômetro
+        setIsTimerRunning(false); // Resetar para garantir que startTimer funcione
+        setTimeout(() => startTimer(), 0);
+        
         toast.success('Entrada registrada com sucesso!');
       }
       loadData(userCode);
@@ -285,7 +328,15 @@ export const Dashboard: React.FC = () => {
         </TimeSection>
         
         <HistorySection>
-          <HistoryTitle>Dias anteriores</HistoryTitle>
+          <HistoryHeader>
+            <HistoryTitle>Dias anteriores</HistoryTitle>
+            {previousRecords.length > 0 && (
+              <ExportButton 
+                timeRecords={previousRecords} 
+                userCode={userCode} 
+              />
+            )}
+          </HistoryHeader>
           <HistoryList>
             {previousRecords.length > 0 ? (
               previousRecords.map((record) => (

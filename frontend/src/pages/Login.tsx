@@ -115,14 +115,14 @@ export const Login: React.FC = () => {
           <Title>
             Ponto <span>ilumeo</span>
           </Title>
-          <Form onSubmit={handleSubmit}>
-            <Input
-              label="Código do usuário"
-              value={userCode}
-              onChange={(e) => setUserCode(e.target.value)}
-              placeholder="Digite seu código"
-              fullWidth
-            />
+        <Form onSubmit={handleSubmit}>
+          <Input
+            label="Código do usuário"
+            value={userCode}
+            onChange={(e) => setUserCode(e.target.value)}
+            placeholder="Digite seu código"
+            fullWidth
+          />
             <InfoMessage>
               Digite qualquer código para acessar o sistema.
               <br />
@@ -130,11 +130,11 @@ export const Login: React.FC = () => {
             </InfoMessage>
             <ButtonWrapper>
               <Button type="submit" fullWidth>
-                Confirmar
+            Confirmar
               </Button>
             </ButtonWrapper>
-            {error && <ErrorMessage>{error}</ErrorMessage>}
-          </Form>
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+        </Form>
         </LoginCard>
       </LoginContent>
     </LoginContainer>

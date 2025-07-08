@@ -1,93 +1,107 @@
-import React from 'react';
+import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { Theme } from '../styles/themes';
 
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  disabled?: boolean;
-  variant?: 'primary' | 'secondary';
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'small' | 'medium' | 'large';
 }
 
-const StyledButton = styled.button<{ $variant: string; $fullWidth: boolean }>`
+// Interface para os props do styled component
+interface StyledButtonProps {
+  $fullWidth?: boolean;
+  $variant?: 'primary' | 'secondary' | 'outline';
+  $size?: 'small' | 'medium' | 'large';
+  theme: Theme;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  border-radius: 8px;
+  padding: ${props => 
+    props.$size === 'small' ? '8px 16px' : 
+    props.$size === 'large' ? '16px 32px' : 
+    '12px 24px'
+  };
+  font-size: ${props => 
+    props.$size === 'small' ? '14px' : 
+    props.$size === 'large' ? '18px' : 
+    '16px'
+  };
   font-weight: 600;
-  font-size: 16px;
-  transition: all 0.3s ease-in-out;
-  width: ${props => props.$fullWidth ? '100%' : 'auto'};
+  border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: ${props => props.$fullWidth ? '100%' : 'auto'};
   
-  ${props => props.$variant === 'primary' && `
-    background-color: #FF8000;
-    color: #FFFFFF;
-    border: none;
-    
-    &:hover {
-      background-color: #E67300;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  ${props => {
+    if (props.$variant === 'secondary') {
+      return `
+        background-color: ${props.theme.colors.secondary};
+        color: ${props.theme.colors.text};
+        border: none;
+        
+        &:hover {
+          filter: brightness(1.1);
+        }
+        
+        &:active {
+          filter: brightness(0.9);
+        }
+      `;
+    } else if (props.$variant === 'outline') {
+      return `
+        background-color: transparent;
+        color: ${props.theme.colors.primary};
+        border: 2px solid ${props.theme.colors.primary};
+        
+        &:hover {
+          background-color: ${props.theme.colors.primary}20;
+        }
+        
+        &:active {
+          background-color: ${props.theme.colors.primary}40;
+        }
+      `;
+    } else {
+      return `
+        background-color: ${props.theme.colors.primary};
+        color: #FFFFFF;
+        border: none;
+        
+        &:hover {
+          filter: brightness(1.1);
+        }
+        
+        &:active {
+          filter: brightness(0.9);
+        }
+      `;
     }
-    
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    &:disabled {
-      background-color: #A0A0A0;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-  `}
+  }}
   
-  ${props => props.$variant === 'secondary' && `
-    background-color: transparent;
-    color: #FF8000;
-    border: 1px solid #FF8000;
-    
-    &:hover {
-      background-color: rgba(255, 128, 0, 0.1);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    
-    &:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    &:disabled {
-      border-color: #A0A0A0;
-      color: #A0A0A0;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-  `}
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(30%);
+  }
 `;
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  disabled = false,
+export const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  fullWidth = false, 
   variant = 'primary',
-  fullWidth = false,
-  type = 'button',
+  size = 'medium',
+  ...rest 
 }) => {
   return (
-    <StyledButton
-      onClick={onClick}
-      disabled={disabled}
+    <StyledButton 
+      $fullWidth={fullWidth} 
       $variant={variant}
-      $fullWidth={fullWidth}
-      type={type}
+      $size={size}
+      {...rest}
     >
       {children}
     </StyledButton>

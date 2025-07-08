@@ -3,20 +3,23 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ConfirmationModal from './ConfirmationModal';
+import ThemeToggle from './ThemeToggle';
+import { Theme } from '../styles/themes';
 
 interface HeaderProps {
   userCode?: string;
   showLogout?: boolean;
 }
 
-const HeaderContainer = styled.header`
+const HeaderContainer = styled.header<{ theme: Theme }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 24px;
-  background-color: #1E2733;
-  border-bottom: 1px solid #2C394B;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.colors.background};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  box-shadow: ${({ theme }) => theme.shadows.small};
+  transition: all 0.3s ease;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     flex-direction: column;
@@ -25,15 +28,15 @@ const HeaderContainer = styled.header`
   }
 `;
 
-const Logo = styled.div`
+const Logo = styled.div<{ theme: Theme }>`
   font-size: 24px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: ${({ theme }) => theme.colors.text};
   display: flex;
   align-items: center;
   
   span {
-    color: #FF8000;
+    color: ${({ theme }) => theme.colors.primary};
     margin-left: 4px;
   }
 
@@ -42,7 +45,7 @@ const Logo = styled.div`
   }
 `;
 
-const RightSection = styled.div`
+const RightSection = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
   gap: 16px;
@@ -53,29 +56,29 @@ const RightSection = styled.div`
   }
 `;
 
-const UserInfo = styled.div`
+const UserInfo = styled.div<{ theme: Theme }>`
   display: flex;
   align-items: center;
-  background-color: #2C394B;
+  background-color: ${({ theme }) => theme.colors.cardBackground};
   padding: 8px 12px;
   border-radius: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: ${({ theme }) => theme.shadows.small};
   
   span {
-    color: #A0A0A0;
+    color: ${({ theme }) => theme.colors.textSecondary};
     margin-right: 8px;
   }
   
   strong {
-    color: #FFFFFF;
+    color: ${({ theme }) => theme.colors.text};
     font-weight: 600;
   }
 `;
 
-const LogoutButton = styled.button`
+const LogoutButton = styled.button<{ theme: Theme }>`
   background-color: transparent;
   border: none;
-  color: #FF8000;
+  color: ${({ theme }) => theme.colors.primary};
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -86,7 +89,7 @@ const LogoutButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: rgba(255, 128, 0, 0.1);
+    background-color: ${({ theme }) => `${theme.colors.primary}20`};
   }
 `;
 
@@ -111,6 +114,7 @@ export const Header: React.FC<HeaderProps> = ({ userCode, showLogout = false }) 
       </Logo>
       {userCode && (
         <RightSection>
+          <ThemeToggle />
           <UserInfo>
             <span>#</span>
             <strong>{userCode}</strong>
