@@ -1,46 +1,110 @@
-# Getting Started with Create React App
+# Frontend do Sistema de Controle de Ponto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Olá! Este é o frontend do nosso sistema de controle de ponto, desenvolvido com React e TypeScript. Aqui você encontrará todas as informações necessárias para entender, executar e contribuir com a interface do usuário do projeto.
 
-## Available Scripts
+## O Que Temos Aqui?
 
-In the project directory, you can run:
+Este projeto frontend oferece:
 
-### `npm start`
+- **Interface moderna e responsiva**: Design adaptável a diferentes dispositivos
+- **Tema claro/escuro**: Opções de visualização para maior conforto
+- **Componentes reutilizáveis**: Botões, inputs e cards padronizados
+- **Navegação intuitiva**: Fluxo simples entre as páginas de login e dashboard
+- **Feedback visual**: Notificações para ações do usuário
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Tecnologias Utilizadas
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **React**: Biblioteca para construção da interface
+- **TypeScript**: Adiciona tipagem estática ao JavaScript
+- **Styled Components**: CSS-in-JS para estilização de componentes
+- **Axios**: Cliente HTTP para comunicação com a API
+- **React Router**: Navegação entre páginas
+- **React Toastify**: Sistema de notificações
+- **Jest e Testing Library**: Framework para testes
 
-### `npm test`
+## Como Executar
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Usando NPM
 
-### `npm run build`
+1. Instale as dependências:
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Crie um arquivo `.env` na raiz do projeto com:
+```
+REACT_APP_API_URL=http://localhost:3001/api
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. Inicie o servidor de desenvolvimento:
+```bash
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Acesse a aplicação em `http://localhost:3000`
 
-### `npm run eject`
+### Comandos Disponíveis
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- **`npm start`**: Inicia o servidor de desenvolvimento
+- **`npm test`**: Executa os testes
+- **`npm run build`**: Cria a versão de produção
+- **`npm run lint`**: Verifica problemas de código
+- **`npm run lint:fix`**: Corrige problemas de código automaticamente
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Estrutura de Arquivos
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+```
+frontend/
+├── public/           # Arquivos públicos
+├── src/              # Código-fonte
+│   ├── assets/       # Imagens e recursos estáticos
+│   ├── components/   # Componentes reutilizáveis
+│   │   ├── Button.tsx
+│   │   ├── Header.tsx
+│   │   ├── Input.tsx
+│   │   └── TimeRecordCard.tsx
+│   ├── pages/        # Páginas da aplicação
+│   │   ├── Dashboard.tsx
+│   │   └── Login.tsx
+│   ├── services/     # Serviços e comunicação com API
+│   │   └── api.ts
+│   ├── styles/       # Estilos globais e temas
+│   │   ├── globalStyles.ts
+│   │   ├── ThemeContext.tsx
+│   │   └── themes.ts
+│   ├── types/        # Definições de tipos TypeScript
+│   │   └── index.ts
+│   ├── App.tsx       # Componente principal
+│   └── index.tsx     # Ponto de entrada
+└── package.json      # Dependências e scripts
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Fluxo de Desenvolvimento
 
-## Learn More
+1. **Entenda o código**: Familiarize-se com a estrutura e componentes
+2. **Faça alterações**: Modifique ou crie novos componentes conforme necessário
+3. **Teste localmente**: Verifique se tudo funciona como esperado
+4. **Escreva testes**: Adicione testes para novas funcionalidades
+5. **Mantenha o padrão**: Siga as convenções de código do projeto
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Dicas Úteis
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Use o tema escuro para desenvolvimento noturno (disponível na interface)
+- Consulte os componentes existentes antes de criar novos
+- Verifique o console do navegador para mensagens de erro
+- Use o React DevTools para depuração
+- Mantenha os componentes pequenos e focados em uma única responsabilidade
+
+## Contribuição
+
+Sua contribuição é muito bem-vinda! Para contribuir:
+
+1. Faça um fork do repositório
+2. Crie uma branch para sua feature (`git checkout -b minha-nova-feature`)
+3. Faça commit das alterações (`git commit -m 'Adiciona nova feature'`)
+4. Faça push para a branch (`git push origin minha-nova-feature`)
+5. Crie um Pull Request
+
+---
+
+Desenvolvido com ❤️ e muito café!
