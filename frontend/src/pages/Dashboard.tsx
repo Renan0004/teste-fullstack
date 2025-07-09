@@ -364,7 +364,7 @@ export const Dashboard: React.FC = () => {
           <HistoryList>
             {previousRecords.length > 0 ? (
               previousRecords.map((record) => (
-                <TimeRecordCard key={record.id} timeRecord={record} />
+                <TimeRecordCard key={record.id} timeRecord={record} userCode={userCode} />
               ))
             ) : (
               <NoRecords>Nenhum registro encontrado</NoRecords>

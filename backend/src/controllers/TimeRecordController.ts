@@ -2,16 +2,16 @@ import { Request, Response } from 'express';
 import { TimeRecordService } from '../services/TimeRecordService';
 import { ITimeRecordService } from '../interfaces/ITimeRecordService';
 
+// Controlador para operações relacionadas a registros de ponto
 export class TimeRecordController {
   private timeRecordService: ITimeRecordService;
 
+  // Inicializa o serviço de registros de ponto
   constructor(timeRecordService: ITimeRecordService = new TimeRecordService()) {
     this.timeRecordService = timeRecordService;
   }
 
-  /**
-   * Obtém o registro de ponto atual do usuário
-   */
+  // Obtém o registro de ponto atual do usuário
   async getCurrentTimeRecord(req: Request, res: Response): Promise<Response> {
     try {
       const { userCode } = req.params;
@@ -42,9 +42,7 @@ export class TimeRecordController {
     }
   }
 
-  /**
-   * Obtém os registros de ponto anteriores do usuário
-   */
+  // Obtém os registros de ponto anteriores do usuário
   async getPreviousTimeRecords(req: Request, res: Response): Promise<Response> {
     try {
       const { userCode } = req.params;
@@ -68,9 +66,7 @@ export class TimeRecordController {
     }
   }
 
-  /**
-   * Registra a entrada do usuário
-   */
+  // Registra a entrada do usuário
   async registerEntry(req: Request, res: Response): Promise<Response> {
     try {
       const { userCode } = req.body;
@@ -88,9 +84,7 @@ export class TimeRecordController {
     }
   }
 
-  /**
-   * Registra a saída do usuário
-   */
+  // Registra a saída do usuário
   async registerExit(req: Request, res: Response): Promise<Response> {
     try {
       const { userCode } = req.body;

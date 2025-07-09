@@ -1,0 +1,132 @@
+2025-07-08 21:47:54 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 21:49:48 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 21:50:26 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 21:50:26 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/4444/current - IP: ::1[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/4444/current - Status: 200 - Duração: 141ms[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/4444/current - IP: ::1[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/4444/history - IP: ::1[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/4444/current - Status: 200 - Duração: 12ms[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/4444/history - Status: 200 - Duração: 84ms[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/4444/history - IP: ::1[39m
+2025-07-08 21:53:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/4444/history - Status: 200 - Duração: 9ms[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 64ms[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 16ms[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 119ms[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:53:55 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 11ms[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição iniciada: OPTIONS /api/time-records/entry - IP: ::1[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição iniciada: POST /api/time-records/entry - IP: ::1[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição finalizada: POST /api/time-records/entry - Status: 201 - Duração: 109ms[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 9ms[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:53:57 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 6ms[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição iniciada: OPTIONS /api/time-records/exit - IP: ::1[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição iniciada: POST /api/time-records/exit - IP: ::1[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição finalizada: POST /api/time-records/exit - Status: 200 - Duração: 62ms[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 7ms[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:53:59 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 9ms[39m
+2025-07-08 21:56:16 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:56:16 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 155ms[39m
+2025-07-08 21:56:16 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:56:16 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 4ms[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 84ms[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 9ms[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 6ms[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 21:58:15 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 38ms[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 122ms[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/current - IP: ::1[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/current - Status: 200 - Duração: 10ms[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 87ms[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/23/history - IP: ::1[39m
+2025-07-08 22:07:27 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/23/history - Status: 200 - Duração: 8ms[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/current - IP: ::1[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/current - Status: 200 - Duração: 49ms[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/current - IP: ::1[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/history - IP: ::1[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/current - Status: 200 - Duração: 17ms[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/history - Status: 200 - Duração: 15ms[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/history - IP: ::1[39m
+2025-07-08 22:07:33 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/history - Status: 200 - Duração: 6ms[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição iniciada: OPTIONS /api/time-records/entry - IP: ::1[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição iniciada: POST /api/time-records/entry - IP: ::1[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição finalizada: POST /api/time-records/entry - Status: 201 - Duração: 32ms[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/current - IP: ::1[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/current - Status: 200 - Duração: 8ms[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/history - IP: ::1[39m
+2025-07-08 22:07:36 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/history - Status: 200 - Duração: 7ms[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição iniciada: OPTIONS /api/time-records/exit - IP: ::1[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição iniciada: POST /api/time-records/exit - IP: ::1[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição finalizada: POST /api/time-records/exit - Status: 200 - Duração: 49ms[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/current - IP: ::1[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/current - Status: 200 - Duração: 10ms[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/history - IP: ::1[39m
+2025-07-08 22:07:38 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/history - Status: 200 - Duração: 8ms[39m
+2025-07-08 22:16:38 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:16:38 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:16:41 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:16:41 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:16:44 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:16:44 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:16:45 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:16:45 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:16:56 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:16:56 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:01 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:01 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:10 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:10 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:13 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:13 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:28 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:28 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:30 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:30 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:34 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:34 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:41 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:41 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:43 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:43 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:17:45 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:17:45 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m
+2025-07-08 22:24:05 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/current - IP: ::1[39m
+2025-07-08 22:24:05 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/current - Status: 200 - Duração: 118ms[39m
+2025-07-08 22:24:05 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/55/history - IP: ::1[39m
+2025-07-08 22:24:05 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/55/history - Status: 200 - Duração: 16ms[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/current - IP: ::1[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/current - Status: 200 - Duração: 178ms[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/current - IP: ::1[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/history - IP: ::1[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/current - Status: 200 - Duração: 34ms[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/history - Status: 200 - Duração: 113ms[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/history - IP: ::1[39m
+2025-07-08 22:32:45 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/history - Status: 200 - Duração: 9ms[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição iniciada: OPTIONS /api/time-records/entry - IP: ::1[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição iniciada: POST /api/time-records/entry - IP: ::1[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição finalizada: POST /api/time-records/entry - Status: 201 - Duração: 133ms[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/current - IP: ::1[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/current - Status: 200 - Duração: 13ms[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/history - IP: ::1[39m
+2025-07-08 22:32:47 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/history - Status: 200 - Duração: 11ms[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição iniciada: OPTIONS /api/time-records/exit - IP: ::1[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição iniciada: POST /api/time-records/exit - IP: ::1[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição finalizada: POST /api/time-records/exit - Status: 200 - Duração: 73ms[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/current - IP: ::1[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/current - Status: 200 - Duração: 8ms[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição iniciada: GET /api/time-records/users/2/history - IP: ::1[39m
+2025-07-08 22:32:51 [35mhttp[39m: [35mRequisição finalizada: GET /api/time-records/users/2/history - Status: 200 - Duração: 10ms[39m
+2025-07-08 22:33:54 [32minfo[39m: [32mServidor rodando na porta 3001[39m
+2025-07-08 22:33:54 [32minfo[39m: [32mDocumentação Swagger disponível em http://localhost:3001/api-docs[39m

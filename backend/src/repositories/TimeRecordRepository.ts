@@ -25,6 +25,7 @@ class TimeRecordRepositoryImpl implements ITimeRecordRepository {
     });
   }
   
+  // Encontra os registros anteriores
   async findPreviousRecords(userId: string, limit: number = 10): Promise<TimeRecord[]> {
     return this.repository.find({
       where: {
@@ -37,6 +38,7 @@ class TimeRecordRepositoryImpl implements ITimeRecordRepository {
     });
   }
   
+  // Cria um registro de entrada
   async createEntry(userId: string): Promise<TimeRecord> {
     const timeRecord = this.repository.create({
       user_id: userId,
@@ -46,6 +48,7 @@ class TimeRecordRepositoryImpl implements ITimeRecordRepository {
     return this.repository.save(timeRecord);
   }
   
+  // Registra a saída
   async registerExit(id: string): Promise<TimeRecord | null> {
     const timeRecord = await this.repository.findOne({ where: { id } });
     

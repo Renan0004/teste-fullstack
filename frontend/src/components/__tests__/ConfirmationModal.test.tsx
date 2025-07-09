@@ -1,12 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '../../styles/ThemeContext';
 import ConfirmationModal from '../ConfirmationModal';
-import { theme } from '../../styles/globalStyles';
 
 const renderWithTheme = (ui: React.ReactElement) => {
   return render(
-    <ThemeProvider theme={theme}>
+    <ThemeProvider>
       {ui}
     </ThemeProvider>
   );

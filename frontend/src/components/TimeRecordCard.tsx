@@ -5,6 +5,7 @@ import { Theme } from '../styles/themes';
 
 interface TimeRecordCardProps {
   timeRecord: TimeRecordWithHours;
+  userCode?: string;
 }
 
 const CardContainer = styled.div<{ theme: Theme }>`
@@ -16,6 +17,7 @@ const CardContainer = styled.div<{ theme: Theme }>`
   margin-bottom: 12px;
   box-shadow: ${({ theme }) => theme.shadows.small};
   transition: all 0.3s ease;
+  position: relative;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     padding: 16px;
@@ -90,7 +92,19 @@ const InProgressBadge = styled.span<{ theme: Theme }>`
   text-transform: uppercase;
 `;
 
-export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) => {
+const UserCodeBadge = styled.div<{ theme: Theme }>`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+`;
+
+export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord, userCode }) => {
   // Formata a data para exibição
   const formatDate = (dateString: string): string => {
     try {
@@ -124,6 +138,7 @@ export const TimeRecordCard: React.FC<TimeRecordCardProps> = ({ timeRecord }) =>
 
   return (
     <CardContainer>
+      {userCode && <UserCodeBadge>#{userCode}</UserCodeBadge>}
       <CardHeader>
         <DateText>{formatDate(timeRecord.entry_time)}</DateText>
         <HoursInfo>
