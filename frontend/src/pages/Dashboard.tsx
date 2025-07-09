@@ -36,6 +36,7 @@ const TimeSection = styled.section<{ theme: Theme }>`
   padding: 24px;
   box-shadow: ${({ theme }) => theme.shadows.medium};
   transition: all 0.3s ease;
+  position: relative;
 
   @media (max-width: ${props => props.theme.breakpoints.mobile}) {
     margin-bottom: 24px;
@@ -66,6 +67,28 @@ const SubTitle = styled.p<{ theme: Theme }>`
   font-size: 14px;
   color: ${({ theme }) => theme.colors.textSecondary};
   margin-bottom: 20px;
+`;
+
+const UserCodeBadge = styled.div<{ theme: Theme }>`
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.mobile}) {
+    top: 20px;
+    right: 20px;
+    font-size: 12px;
+    padding: 3px 10px;
+  }
 `;
 
 const HistorySection = styled.section<{ theme: Theme }>`
@@ -308,6 +331,7 @@ export const Dashboard: React.FC = () => {
       <Header userCode={userCode} showLogout={true} />
       <DashboardContent>
         <TimeSection>
+          <UserCodeBadge># {userCode}</UserCodeBadge>
           <TimeTitle>Relógio de ponto</TimeTitle>
           <TimeDisplay>
             {formatTime(workedHours.hours, workedHours.minutes, workedHours.seconds)}
