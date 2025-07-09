@@ -1,8 +1,12 @@
-import { Between, LessThan, Not, IsNull } from 'typeorm';
+import { Between } from 'typeorm';
 import { AppDataSource } from '../config/database';
 import { TimeRecord } from '../models/TimeRecord';
+import { ITimeRecordRepository } from '../interfaces/ITimeRecordRepository';
 
-export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).extend({
+// Criamos uma classe concreta que implementa a interface
+class TimeRecordRepositoryImpl implements ITimeRecordRepository {
+  private repository = AppDataSource.getRepository(TimeRecord);
+
   async findCurrentDayRecord(userId: string): Promise<TimeRecord | null> {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -10,7 +14,7 @@ export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).exte
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     
-    return this.findOne({
+    return this.repository.findOne({
       where: {
         user_id: userId,
         entry_time: Between(today, tomorrow)
@@ -19,12 +23,10 @@ export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).exte
         entry_time: 'DESC'
       }
     });
-  },
+  }
   
   async findPreviousRecords(userId: string, limit: number = 10): Promise<TimeRecord[]> {
-    // Busca todos os registros, incluindo os que estão em andamento
-    // Modificamos para remover a condição de exit_time não ser nulo
-    return this.find({
+    return this.repository.find({
       where: {
         user_id: userId,
       },
@@ -33,19 +35,19 @@ export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).exte
       },
       take: limit
     });
-  },
+  }
   
   async createEntry(userId: string): Promise<TimeRecord> {
-    const timeRecord = this.create({
+    const timeRecord = this.repository.create({
       user_id: userId,
       entry_time: new Date()
     });
     
-    return this.save(timeRecord);
-  },
+    return this.repository.save(timeRecord);
+  }
   
   async registerExit(id: string): Promise<TimeRecord | null> {
-    const timeRecord = await this.findOne({ where: { id } });
+    const timeRecord = await this.repository.findOne({ where: { id } });
     
     if (!timeRecord || timeRecord.exit_time) {
       return null;
@@ -70,6 +72,9 @@ export const TimeRecordRepository = AppDataSource.getRepository(TimeRecord).exte
     timeRecord.total_minutes = diffMinutes;
     timeRecord.total_seconds = remainingSeconds;
     
-    return this.save(timeRecord);
+    return this.repository.save(timeRecord);
   }
-}); 
+}
+
+// Exportamos uma instância única do repositório
+export const TimeRecordRepository: ITimeRecordRepository = new TimeRecordRepositoryImpl(); 

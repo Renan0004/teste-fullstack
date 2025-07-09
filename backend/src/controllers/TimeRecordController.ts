@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { TimeRecordService } from '../services/TimeRecordService';
+import { ITimeRecordService } from '../interfaces/ITimeRecordService';
 
 export class TimeRecordController {
-  private timeRecordService: TimeRecordService;
+  private timeRecordService: ITimeRecordService;
 
-  constructor() {
-    this.timeRecordService = new TimeRecordService();
+  constructor(timeRecordService: ITimeRecordService = new TimeRecordService()) {
+    this.timeRecordService = timeRecordService;
   }
 
   /**

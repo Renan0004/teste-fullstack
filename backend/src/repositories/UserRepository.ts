@@ -1,19 +1,28 @@
 import { AppDataSource } from '../config/database';
 import { User } from '../models/User';
+import { IUserRepository } from '../interfaces/IUserRepository';
 
-export const UserRepository = AppDataSource.getRepository(User).extend({
+class UserRepositoryImpl implements IUserRepository {
+  private repository = AppDataSource.getRepository(User);
+
   async findByCode(code: string): Promise<User | null> {
-    return this.findOne({ where: { code } });
-  },
+    return this.repository.findOne({ where: { code } });
+  }
+
+  async create(code: string): Promise<User> {
+    const user = this.repository.create({ code });
+    return this.repository.save(user);
+  }
 
   async createIfNotExists(code: string): Promise<User> {
     let user = await this.findByCode(code);
     
     if (!user) {
-      user = this.create({ code });
-      await this.save(user);
+      user = await this.create(code);
     }
     
     return user;
   }
-}); 
+}
+
+export const UserRepository: IUserRepository = new UserRepositoryImpl(); 
